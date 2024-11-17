@@ -1,0 +1,33 @@
+<div
+  class="container"
+  *ngIf="student"
+>
+
+  <div class="student-info">
+    <div
+      *ngIf="student.imageUrl"
+      class="profile-picture"
+    >
+
+      <img
+        [src]="student.imageUrl"
+        [width]="100"
+        [height]="100"
+        class="img-fluid ml-3 thumbnail-img"
+        id="img_create_image"
+        alt="Student Photo"
+        role="presentation"
+      >
+    </div>
+    <div class="details">
+      <h2>{{student.firstName + ' ' + student.lastName}}</h2>
+      <p><strong>Student ID:</strong> {{student.ssn}}</p>
+      <p><strong>Email:</strong> {{student.email}}</p>
+      <p><strong>Phone:</strong> {{student.phoneNumber}}</p>
+      <p><strong>Start Date:</strong> {{student.startDate |
+        date:'mediumDate'}} </p>
+    </div>
+  </div>
+
+  <button (click)="onClose()">Close</button>
+</div>

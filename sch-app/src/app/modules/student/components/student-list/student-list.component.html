@@ -1,0 +1,127 @@
+<button
+  (click)="onAdd()"
+  [disabled]="gridDataLoading || isDeleing"
+>Add</button>
+
+<kendo-grid
+  [kendoGridBinding]="gridData"
+  [loading]="gridDataLoading || isDeleing"
+  [pageable]="true"
+  [pageSize]="5"
+  [sortable]="true"
+  [filterable]="filterMode"
+  [navigable]="true"
+  [selectable]="selectableSettings"
+  kendoGridSelectBy="id"
+  [(selectedKeys)]="selectedKeys"
+  (selectionChange)="onSelectionChange()"
+>
+  <kendo-grid-column
+    field="firstName"
+    title="First Name"
+  >
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <div
+        *ngIf="dataItem.imageUrl"
+        class="customer-photo"
+      >
+        <img
+          [src]="dataItem.imageUrl"
+          [width]="32"
+          [height]="32"
+          class="img-fluid ml-3 thumbnail-img"
+          id="img_create_image"
+          alt=""
+          role="presentation"
+        >
+      </div>
+      <div class="customer-name">{{ dataItem.firstName }}</div>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column
+    field="lastName"
+    title="Last Name"
+  > </kendo-grid-column>
+  <kendo-grid-column
+    field="email"
+    title="Email"
+  > </kendo-grid-column>
+  <kendo-grid-column
+    field="phoneNumber"
+    title="Phone Number"
+  > </kendo-grid-column>
+  <kendo-grid-column
+    field="ssn"
+    title="SSN"
+  > </kendo-grid-column>
+  <kendo-grid-column
+    field="startDate"
+    title="Start Date"
+  >
+    <ng-template
+      kendoGridFilterCellTemplate
+      let-filter
+      let-column="column"
+    >
+      <kendo-grid-date-filter-cell
+        [column]="column"
+        [filter]="filter"
+      >
+      </kendo-grid-date-filter-cell>
+    </ng-template>
+
+    <ng-template
+      kendoGridCellTemplate
+      let-dataItem
+      let-rowIndex="rowIndex"
+    >
+      {{dataItem.startDate | date:'mediumDate'}}
+    </ng-template>
+
+  </kendo-grid-column>
+
+  <kendo-grid-column [filterable]="false">
+
+    <ng-template
+      kendoGridCellTemplate
+      let-dataItem
+      let-rowIndex="rowIndex"
+    >
+      <button
+        (click)="onEdit(dataItem)"
+        [disabled]="isDeleing || gridDataLoading"
+      >Edit</button>
+      <button
+        (click)="onDelete(dataItem)"
+        [disabled]="isDeleing || gridDataLoading"
+      >Delete</button>
+    </ng-template>
+
+  </kendo-grid-column>
+
+  <ng-template kendoPagerTemplate>
+    <kendo-pager-page-sizes
+      id="pagerPageSize_gridPager_studentList"
+      [pageSizes]="pageSizes"
+    >
+    </kendo-pager-page-sizes>
+    <kendo-pager-info
+      id="pagerInfo_gridPager_studentList"></kendo-pager-info>
+    <kendo-pager-prev-buttons id="pagerPrevButtons_gridPager_studentList">
+    </kendo-pager-prev-buttons>
+    <kendo-pager-numeric-buttons
+      id="pagerNumericButtons_gridPager_studentList"
+      [buttonCount]="5"
+    >
+    </kendo-pager-numeric-buttons>
+    <kendo-pager-next-buttons id="pagerNextButtons_gridPager_studentList">
+    </kendo-pager-next-buttons>
+  </ng-template>
+
+</kendo-grid>
+
+
+<sch-student-info
+  [student]="selectedStudent"
+  (whenClose)="onCloseInfo()"
+></sch-student-info>
